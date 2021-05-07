@@ -69,6 +69,11 @@ public class IstePlugin implements IIstePlugin {
 	}
 
 	@Override
+	public void projectChanged() {
+		sampleIstePluginPanel.refreshProjectOptions();
+	}
+
+	@Override
 	public void unloaded() {
 		showDialog("Sample ISTE Plugin unloaded");
 	}

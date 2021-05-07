@@ -21,16 +21,24 @@ import java.awt.event.ActionListener;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Optional;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
+import java.awt.BorderLayout;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class SampleIstePluginPanel extends JPanel implements IIstePluginTab {
 
 	private static final long serialVersionUID = 1L;
 
 	private IIstePluginCallbacks callbacks;
+
+	private JTextField textFieldProjectOption1;
+	private JTextField textFieldProjectOption2;
 
 	private JTextField textFieldName;
 	private JTextField textFieldRemark;
@@ -48,6 +56,39 @@ public class SampleIstePluginPanel extends JPanel implements IIstePluginTab {
 
 	public SampleIstePluginPanel(IIstePluginCallbacks callbacks) {
 		this.callbacks = callbacks;
+		setLayout(new BorderLayout(0, 0));
+		
+		JPanel panelNorth = new JPanel();
+		panelNorth.setBorder(new LineBorder(new Color(128, 128, 128)));
+		FlowLayout flowLayout = (FlowLayout) panelNorth.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		add(panelNorth, BorderLayout.NORTH);
+		
+		JLabel lblProjectOption1 = new JLabel("Project Option 1:");
+		panelNorth.add(lblProjectOption1);
+		
+		textFieldProjectOption1 = new JTextField();
+		panelNorth.add(textFieldProjectOption1);
+		textFieldProjectOption1.setColumns(10);
+		
+		JLabel lblProjectOption2 = new JLabel("Project Option 2:");
+		panelNorth.add(lblProjectOption2);
+		
+		textFieldProjectOption2 = new JTextField();
+		panelNorth.add(textFieldProjectOption2);
+		textFieldProjectOption2.setColumns(10);
+		
+		JButton btnSaveProjectOption = new JButton("Save Project Options");
+		btnSaveProjectOption.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				saveProjectOptions();
+			}
+		});
+		panelNorth.add(btnSaveProjectOption);
+		
+		JPanel panelCenter = new JPanel();
+		panelCenter.setBorder(new LineBorder(Color.GRAY));
+		add(panelCenter);
 		
 		JButton btnAddToListTab = new JButton("Add to List tab");
 		btnAddToListTab.addActionListener(new ActionListener() {
@@ -55,54 +96,54 @@ public class SampleIstePluginPanel extends JPanel implements IIstePluginTab {
 				addToListTab();
 			}
 		});
-		add(btnAddToListTab);
+		panelCenter.add(btnAddToListTab);
 		
 		JLabel lblName = new JLabel("Name:");
-		add(lblName);
+		panelCenter.add(lblName);
 		
 		textFieldName = new JTextField();
 		textFieldName.setText("Sample name");
-		add(textFieldName);
+		panelCenter.add(textFieldName);
 		textFieldName.setColumns(10);
 		
 		JLabel lblRemark = new JLabel("Remark:");
-		add(lblRemark);
+		panelCenter.add(lblRemark);
 		
 		textFieldRemark = new JTextField();
 		textFieldRemark.setText("Sample remark");
-		add(textFieldRemark);
+		panelCenter.add(textFieldRemark);
 		textFieldRemark.setColumns(10);
 		
 		JLabel lblPriority = new JLabel("Priority:");
-		add(lblPriority);
+		panelCenter.add(lblPriority);
 		
 		textFieldPriority = new JTextField();
 		textFieldPriority.setText("A");
-		add(textFieldPriority);
+		panelCenter.add(textFieldPriority);
 		textFieldPriority.setColumns(2);
 		
 		JLabel lblProgress = new JLabel("Progress:");
-		add(lblProgress);
+		panelCenter.add(lblProgress);
 		
 		comboBoxProgress = new JComboBox<IsteProgress>();
 		Arrays.stream(IsteProgress.values()).forEach(isteProgress -> {
 			comboBoxProgress.addItem(isteProgress);
 		});
-		add(comboBoxProgress);
+		panelCenter.add(comboBoxProgress);
 		
 		JLabel lblProgressNotes = new JLabel("Progress Notes:");
-		add(lblProgressNotes);
+		panelCenter.add(lblProgressNotes);
 		
 		txtFieldProgressNotes = new JTextField();
 		txtFieldProgressNotes.setText("Sample progress notes");
-		add(txtFieldProgressNotes);
+		panelCenter.add(txtFieldProgressNotes);
 		txtFieldProgressNotes.setColumns(10);
 		
 		JLabel lblNotes = new JLabel("Notes:");
-		add(lblNotes);
+		panelCenter.add(lblNotes);
 		
 		JScrollPane scrollPaneNotes = new JScrollPane();
-		add(scrollPaneNotes);
+		panelCenter.add(scrollPaneNotes);
 		
 		textAreaNotes = new JTextArea();
 		textAreaNotes.setRows(5);
@@ -111,48 +152,63 @@ public class SampleIstePluginPanel extends JPanel implements IIstePluginTab {
 		scrollPaneNotes.setViewportView(textAreaNotes);
 		
 		JLabel lblHost = new JLabel("Host:");
-		add(lblHost);
+		panelCenter.add(lblHost);
 		
 		textFieldHost = new JTextField();
 		textFieldHost.setText("localhost");
-		add(textFieldHost);
+		panelCenter.add(textFieldHost);
 		textFieldHost.setColumns(10);
 		
 		JLabel lblPort = new JLabel("Port:");
-		add(lblPort);
+		panelCenter.add(lblPort);
 		
 		textFieldPort = new JTextField();
 		textFieldPort.setText("8080");
-		add(textFieldPort);
+		panelCenter.add(textFieldPort);
 		textFieldPort.setColumns(10);
 		
 		chckbxUseHttps = new JCheckBox("Use HTTPS");
-		add(chckbxUseHttps);
+		panelCenter.add(chckbxUseHttps);
 		
 		JLabel lblRequest = new JLabel("Request:");
-		add(lblRequest);
+		panelCenter.add(lblRequest);
 		
 		JScrollPane scrollPaneRequest = new JScrollPane();
-		add(scrollPaneRequest);
+		panelCenter.add(scrollPaneRequest);
 		
 		textAreaRequest = new JTextArea();
 		textAreaRequest.setText("GET /index.html?p=1 HTTP/1.1\r\nHost: localhost\r\n\r\n");
 		scrollPaneRequest.setViewportView(textAreaRequest);
 		textAreaRequest.setRows(5);
-		textAreaRequest.setColumns(20);
+		textAreaRequest.setColumns(30);
 		
 		JLabel lblResponse = new JLabel("Response:");
-		add(lblResponse);
+		panelCenter.add(lblResponse);
 		
 		JScrollPane scrollPaneResponse = new JScrollPane();
-		add(scrollPaneResponse);
+		panelCenter.add(scrollPaneResponse);
 		
 		textAreaResponse = new JTextArea();
 		textAreaResponse.setText("HTTP/1.1 200 OK\r\nSet-Cookie: sessionid=xxxxxxxxxx\r\nContent-Type: text/html\r\nContent-Length: 44\r\n\r\n<html><body>Hello ISTE Plugin!</body></html>");
 		scrollPaneResponse.setViewportView(textAreaResponse);
 		textAreaResponse.setRows(5);
-		textAreaResponse.setColumns(20);
+		textAreaResponse.setColumns(30);
 		
+		loadProjectOptions();
+	}
+
+	private static final String PROJECT_OPTION_KEY_OPTION1 = "option1";
+	private static final String PROJECT_OPTION_KEY_OPTION2 = "option2";
+	private void loadProjectOptions() {
+		textFieldProjectOption1.setText(Optional.ofNullable(callbacks.loadIstePluginProjectOption(PROJECT_OPTION_KEY_OPTION1)).orElse(""));
+		textFieldProjectOption2.setText(Optional.ofNullable(callbacks.loadIstePluginProjectOption(PROJECT_OPTION_KEY_OPTION2)).orElse(""));
+	}
+	private void saveProjectOptions() {
+		callbacks.saveIstePluginProjectOption(PROJECT_OPTION_KEY_OPTION1, textFieldProjectOption1.getText());
+		callbacks.saveIstePluginProjectOption(PROJECT_OPTION_KEY_OPTION2, textFieldProjectOption2.getText());
+	}
+	void refreshProjectOptions() {
+		loadProjectOptions();
 	}
 
 	private void addToListTab() {

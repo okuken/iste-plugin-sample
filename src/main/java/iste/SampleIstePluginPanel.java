@@ -64,14 +64,14 @@ public class SampleIstePluginPanel extends JPanel implements IIstePluginTab {
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		add(panelNorth, BorderLayout.NORTH);
 		
-		JLabel lblProjectOption1 = new JLabel("Project Option 1:");
+		JLabel lblProjectOption1 = new JLabel("Plugin Project Option 1:");
 		panelNorth.add(lblProjectOption1);
 		
 		textFieldProjectOption1 = new JTextField();
 		panelNorth.add(textFieldProjectOption1);
 		textFieldProjectOption1.setColumns(10);
 		
-		JLabel lblProjectOption2 = new JLabel("Project Option 2:");
+		JLabel lblProjectOption2 = new JLabel("Plugin Project Option 2:");
 		panelNorth.add(lblProjectOption2);
 		
 		textFieldProjectOption2 = new JTextField();
@@ -87,6 +87,8 @@ public class SampleIstePluginPanel extends JPanel implements IIstePluginTab {
 		panelNorth.add(btnSaveProjectOption);
 		
 		JPanel panelCenter = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panelCenter.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		panelCenter.setBorder(new LineBorder(Color.GRAY));
 		add(panelCenter);
 		

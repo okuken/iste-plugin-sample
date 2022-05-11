@@ -13,6 +13,10 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-    compileOnly files('../iste-plugin-api/build/libs/iste-plugin-api-0.1.0.jar') // https://github.com/okuken/iste-plugin-api
-    testRuntimeOnly files(System.getProperty("user.home") + '\\AppData\\Local\\Programs\\BurpSuitePro\\burpsuite_pro.jar') // set your local path to burpsuite jar
+    compileOnly files('./lib/iste-plugin-api-0.1.1.jar') // https://github.com/okuken/iste-plugin-api
+
+    // Set your local path to burpsuite jar. Main class is burp.StartBurp .
+    testRuntimeOnly files(System.getProperty("user.home") + '\\AppData\\Local\\Programs\\BurpSuiteCommunity\\burpsuite_community.jar')
+//    testRuntimeOnly files(System.getProperty("user.home") + '\\AppData\\Local\\Programs\\BurpSuitePro\\burpsuite_pro.jar')
+
 }
